@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
+import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
@@ -9,6 +10,7 @@ function App() {
     <Router>
       <AuthProvider>
         <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
+          <Navbar />
           <main className="flex-1">
             <Routes>
               <Route path="/" element={<Navigate to="/login" replace />} />
