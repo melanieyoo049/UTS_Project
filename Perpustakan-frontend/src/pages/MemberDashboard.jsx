@@ -4,6 +4,28 @@ import { useAuth } from '../context/AuthContext';
 import { BookOpen, Calendar, Clock, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+function BorrowedBookCover({ url, title }) {
+  const [error, setError] = useState(false);
+
+  if (!url || error) {
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center bg-slate-900/90 text-slate-500 p-2 text-center">
+        <BookOpen className="w-6 h-6 stroke-[1.5] text-slate-600 mb-1" />
+        <span className="text-[9px] text-slate-500 line-clamp-2 leading-tight">{title}</span>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={url}
+      alt={title}
+      onError={() => setError(true)}
+      className="w-full h-full object-cover"
+    />
+  );
+}
+
 export default function MemberDashboard() {
   const [borrowings, setBorrowings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -97,17 +119,7 @@ export default function MemberDashboard() {
                 className="bg-slate-800/90 border border-slate-700/80 rounded-xl p-4 flex gap-4 shadow-sm"
               >
                 <div className="w-20 h-28 bg-slate-900 rounded-lg overflow-hidden shrink-0 border border-slate-700/60">
-                  {item.cover_url ? (
-                    <img
-                      src={item.cover_url}
-                      alt={item.book_title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-slate-600">
-                      <BookOpen className="w-6 h-6" />
-                    </div>
-                  )}
+                  <BorrowedBookCover url={item.cover_url} title={item.book_title} />
                 </div>
 
                 <div className="flex flex-col justify-between flex-1">

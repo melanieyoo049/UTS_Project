@@ -19,6 +19,23 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+function AdminBookThumbnail({ url, title }) {
+  const [error, setError] = useState(false);
+
+  if (!url || error) {
+    return <BookOpen className="w-4 h-4 text-slate-600" />;
+  }
+
+  return (
+    <img
+      src={url}
+      alt={title}
+      onError={() => setError(true)}
+      className="w-full h-full object-cover"
+    />
+  );
+}
+
 export default function AdminDashboard() {
   const { token, user, isAdmin } = useAuth();
   const navigate = useNavigate();
@@ -349,15 +366,7 @@ export default function AdminDashboard() {
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-3">
                             <div className="w-10 h-14 bg-slate-800 rounded overflow-hidden shrink-0 border border-slate-700/60 flex items-center justify-center">
-                              {book.cover_url ? (
-                                <img
-                                  src={book.cover_url}
-                                  alt={book.title}
-                                  className="w-full h-full object-cover"
-                                />
-                              ) : (
-                                <BookOpen className="w-4 h-4 text-slate-600" />
-                              )}
+                              <AdminBookThumbnail url={book.cover_url} title={book.title} />
                             </div>
                             <div>
                               <p className="font-semibold text-white line-clamp-1">{book.title}</p>
