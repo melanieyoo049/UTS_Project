@@ -5,6 +5,7 @@ const { initializeDatabase } = require('./src/config/database');
 const { seedInitialData } = require('./src/config/seed');
 const authRoutes = require('./src/routes/authRoutes');
 const bookRoutes = require('./src/routes/bookRoutes');
+const borrowRoutes = require('./src/routes/borrowRoutes');
 const testRoutes = require('./src/routes/test');
 const productRoutes = require('./src/routes/productRoutes');
 
@@ -30,6 +31,10 @@ app.get('/', (req, res) => {
       'POST   /api/books':           'Tambah buku baru (Admin)',
       'PUT    /api/books/:id':       'Update buku (Admin)',
       'DELETE /api/books/:id':       'Hapus buku (Admin)',
+      'POST   /api/borrowings':      'Pinjam buku (Member)',
+      'GET    /api/borrowings/my':   'Riwayat peminjaman member',
+      'GET    /api/borrowings':      'Semua transaksi peminjaman (Admin)',
+      'PUT    /api/borrowings/:id/return': 'Konfirmasi pengembalian buku (Admin)',
     },
   });
 });
@@ -37,6 +42,7 @@ app.get('/', (req, res) => {
 /* Routes */
 app.use('/api/auth', authRoutes);
 app.use('/api/books', bookRoutes);
+app.use('/api/borrowings', borrowRoutes);
 app.use('/api/test', testRoutes);
 app.use('/api/products', productRoutes);
 
