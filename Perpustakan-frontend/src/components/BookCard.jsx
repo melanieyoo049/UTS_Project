@@ -2,21 +2,24 @@ import { useState } from 'react';
 import { Book, CheckCircle, AlertCircle } from 'lucide-react';
 
 export default function BookCard({ book, onBorrow, isBorrowing }) {
+  const [imgError, setImgError] = useState(false);
   const isAvailable = book.stock > 0;
 
   return (
     <article className="group bg-slate-800/80 hover:bg-slate-800 border border-slate-700/60 rounded-xl overflow-hidden flex flex-col transition duration-150 shadow-sm hover:shadow-md">
       <div className="relative aspect-[4/3] bg-slate-900 overflow-hidden">
-        {book.cover_url ? (
+        {book.cover_url && !imgError ? (
           <img
             src={book.cover_url}
             alt={book.title}
+            onError={() => setImgError(true)}
             className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
             loading="lazy"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-slate-600">
-            <Book className="w-12 h-12 stroke-[1.5]" />
+          <div className="w-full h-full flex flex-col items-center justify-center bg-slate-900/90 text-slate-500 gap-1.5 p-3 text-center">
+            <Book className="w-10 h-10 stroke-[1.5] text-slate-600" />
+            <span className="text-[10px] font-medium text-slate-500 line-clamp-1">{book.title}</span>
           </div>
         )}
         <div className="absolute top-2.5 right-2.5">

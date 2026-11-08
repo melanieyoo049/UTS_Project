@@ -50,7 +50,7 @@ const seedInitialData = async () => {
           author: 'Robert C. Martin',
           category: 'Teknologi & Pemrograman',
           stock: 2,
-          cover_url: 'https://images.unsplash.com/photo-1532012164546-f432f2e3edd9?w=500&auto=format&fit=crop&q=60',
+          cover_url: 'https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?w=500&auto=format&fit=crop&q=60',
           description: 'Panduan standar industri untuk menulis kode perangkat lunak yang rapi dan mudah dirawat.'
         },
         {

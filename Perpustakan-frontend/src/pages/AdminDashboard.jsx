@@ -89,7 +89,6 @@ export default function AdminDashboard() {
     const dueDate = new Date(borrow.due_date);
     const returnOrCurrentDate = borrow.return_date ? new Date(borrow.return_date) : new Date();
 
-    // Reset jam ke 00:00:00 agar hitungan hari presisi
     dueDate.setHours(0, 0, 0, 0);
     returnOrCurrentDate.setHours(0, 0, 0, 0);
 
@@ -391,7 +390,6 @@ export default function AdminDashboard() {
       {/* KONTEN TAB 1: KELOLA BUKU */}
       {activeTab === 'books' && (
         <div>
-          {/* Bar Pencarian */}
           <div className="flex flex-col sm:flex-row gap-3 mb-6 justify-between items-center">
             <div className="relative w-full sm:w-80">
               <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
@@ -412,7 +410,6 @@ export default function AdminDashboard() {
             </button>
           </div>
 
-          {/* Tabel Buku */}
           {loading ? (
             <div className="py-16 text-center text-slate-500 text-xs sm:text-sm">
               Memuat data katalog buku...
@@ -441,6 +438,10 @@ export default function AdminDashboard() {
                           <img
                             src={b.cover_url || 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&q=80&w=200'}
                             alt={b.title}
+                            onError={(e) => {
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = 'https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&q=80&w=200';
+                            }}
                             className="w-10 h-14 object-cover rounded-md border border-slate-700 shrink-0"
                           />
                           <div>
@@ -494,7 +495,6 @@ export default function AdminDashboard() {
       {/* KONTEN TAB 2: DAFTAR PEMINJAM & DENDA */}
       {activeTab === 'borrowings' && (
         <div>
-          {/* Header Bar untuk Download Excel */}
           <div className="flex flex-col sm:flex-row gap-3 mb-6 justify-between items-center">
             <p className="text-xs sm:text-sm text-slate-400">
               Perhitungan denda: <span className="font-semibold text-amber-400">Rp 1.000 / hari keterlambatan</span> dari batas tanggal tenggat.
