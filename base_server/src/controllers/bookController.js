@@ -31,13 +31,19 @@ const createBook = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Judul, penulis, dan kategori wajib diisi.' });
     }
 
+    const parsedStock = parseInt(stock, 10);
+    const finalStock = Number.isNaN(parsedStock) ? 1 : parsedStock;
+    if (finalStock < 0) {
+      return res.status(400).json({ success: false, message: 'Jumlah stok tidak boleh bernilai negatif.' });
+    }
+
     const result = await bookModel.create({
-      title,
-      author,
-      category,
-      stock: parseInt(stock, 10) || 1,
-      cover_url: cover_url || '',
-      description: description || ''
+      title: title.trim(),
+      author: author.trim(),
+      category: category.trim(),
+      stock: finalStock,
+      cover_url: cover_url ? cover_url.trim() : '',
+      description: description ? description.trim() : ''
     });
 
     const newBook = await bookModel.getById(result.lastID);
@@ -57,13 +63,22 @@ const updateBook = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Buku tidak ditemukan.' });
     }
 
+    let finalStock = existingBook.stock;
+    if (stock !== undefined) {
+      const parsedStock = parseInt(stock, 10);
+      if (Number.isNaN(parsedStock) || parsedStock < 0) {
+        return res.status(400).json({ success: false, message: 'Jumlah stok tidak valid (harus angka >= 0).' });
+      }
+      finalStock = parsedStock;
+    }
+
     await bookModel.update(id, {
-      title: title || existingBook.title,
-      author: author || existingBook.author,
-      category: category || existingBook.category,
-      stock: stock !== undefined ? parseInt(stock, 10) : existingBook.stock,
-      cover_url: cover_url !== undefined ? cover_url : existingBook.cover_url,
-      description: description !== undefined ? description : existingBook.description
+      title: title !== undefined ? title.trim() : existingBook.title,
+      author: author !== undefined ? author.trim() : existingBook.author,
+      category: category !== undefined ? category.trim() : existingBook.category,
+      stock: finalStock,
+      cover_url: cover_url !== undefined ? cover_url.trim() : existingBook.cover_url,
+      description: description !== undefined ? description.trim() : existingBook.description
     });
 
     const updated = await bookModel.getById(id);

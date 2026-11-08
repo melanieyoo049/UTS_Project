@@ -11,6 +11,15 @@ const register = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Nama, username, email, dan password wajib diisi.' });
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ success: false, message: 'Format email tidak valid.' });
+    }
+
+    if (password.length < 6) {
+      return res.status(400).json({ success: false, message: 'Password minimal terdiri dari 6 karakter.' });
+    }
+
     const existingUser = await userModel.findByEmailOrUsername(email);
     const existingUsername = await userModel.findByEmailOrUsername(username);
 

@@ -7,7 +7,6 @@ const authRoutes = require('./src/routes/authRoutes');
 const bookRoutes = require('./src/routes/bookRoutes');
 const borrowRoutes = require('./src/routes/borrowRoutes');
 const testRoutes = require('./src/routes/test');
-const productRoutes = require('./src/routes/productRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -44,7 +43,6 @@ app.use('/api/auth', authRoutes);
 app.use('/api/books', bookRoutes);
 app.use('/api/borrowings', borrowRoutes);
 app.use('/api/test', testRoutes);
-app.use('/api/products', productRoutes);
 
 /* 404 */
 app.use((req, res) => {

@@ -3,18 +3,6 @@ CREATE TABLE IF NOT EXISTS test_logs (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS products (
-    id            INTEGER PRIMARY KEY AUTOINCREMENT,
-    name          TEXT    NOT NULL,
-    price         REAL    NOT NULL,
-    stock         INTEGER DEFAULT 0,
-    category      TEXT,
-    description   TEXT,
-    is_available  INTEGER DEFAULT 1,
-    created_at    DATETIME DEFAULT CURRENT_TIMESTAMP,
-    updated_at    DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
 -- Tabel Pengguna (Admin & Member/Pengunjung)
 CREATE TABLE IF NOT EXISTS users (
     id          INTEGER PRIMARY KEY AUTOINCREMENT,
