@@ -2,7 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { initializeDatabase } = require('./src/config/database');
-const testRoutes =  require('./src/routes/test')
+const { seedInitialData } = require('./src/config/seed');
+const authRoutes = require('./src/routes/authRoutes');
+const bookRoutes = require('./src/routes/bookRoutes');
+const testRoutes = require('./src/routes/test');
 const productRoutes = require('./src/routes/productRoutes');
 
 const app = express();
@@ -16,19 +19,25 @@ app.use(express.urlencoded({ extended: true }));
 /* Root route */
 app.get('/', (req, res) => {
   res.json({
-    message: '🚀 Product API is running',
+    message: '🚀 Backend API Perpustakaan - Project UTS is running',
     endpoints: {
-      'GET    /api/products':      'Ambil semua produk',
-      'GET    /api/products/:id':  'Ambil produk by id',
-      'POST   /api/products':      'Buat produk baru',
-      'PUT    /api/products/:id':  'Update produk',
-      'DELETE /api/products/:id':  'Hapus produk',
+      'POST   /api/auth/register':   'Registrasi user baru',
+      'POST   /api/auth/login':      'Login user/admin',
+      'GET    /api/auth/me':         'Ambil profil user login',
+      'GET    /api/books':           'Ambil semua buku (filter search/category)',
+      'GET    /api/books/categories':'Ambil daftar kategori buku',
+      'GET    /api/books/:id':       'Ambil detail buku by id',
+      'POST   /api/books':           'Tambah buku baru (Admin)',
+      'PUT    /api/books/:id':       'Update buku (Admin)',
+      'DELETE /api/books/:id':       'Hapus buku (Admin)',
     },
   });
 });
 
 /* Routes */
-app.use('/api/test', testRoutes)
+app.use('/api/auth', authRoutes);
+app.use('/api/books', bookRoutes);
+app.use('/api/test', testRoutes);
 app.use('/api/products', productRoutes);
 
 /* 404 */
@@ -39,6 +48,7 @@ app.use((req, res) => {
 /* Start */
 (async () => {
   await initializeDatabase();
+  await seedInitialData();
   app.listen(PORT, () => {
     console.log(`🚀 Server: http://localhost:${PORT}`);
   });

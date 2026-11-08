@@ -77,4 +77,3 @@ const bookModel = {
 };
 
 module.exports = bookModel;
-git pull origin main
