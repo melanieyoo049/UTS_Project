@@ -27,6 +27,13 @@ export const api = {
     return res.json();
   },
 
+  getUsers: async (token) => {
+    const res = await fetch(`${API_BASE}/auth/users`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.json();
+  },
+
   // Books
   getCategories: async () => {
     const res = await fetch(`${API_BASE}/books/categories`);
