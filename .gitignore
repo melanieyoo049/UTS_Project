@@ -1,7 +1,7 @@
 # Dependencies
 node_modules/
 **/node_modules/
-
+# GitHub identity verification
 # Environment Variables (PENTING: Jangan upload kredensial/token rahasia)
 .env
 *.env
