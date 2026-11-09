@@ -8,10 +8,8 @@ node_modules/
 .env.local
 .env.*.local
 
-# SQLite Database (agar file DB lokal tidak tertimpa/terekspos)
-*.sqlite
-*.sqlite3
-*.db
+# SQLite Database diizinkan untuk di-upload sesuai instruksi penilaian dosen
+# (tidak di-ignore agar database.sqlite terikutsertakan)
 
 # Build outputs
 dist/
